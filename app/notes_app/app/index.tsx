@@ -1,37 +1,17 @@
-import { Note } from "@/types/note";
+import { Note } from "@/note";
 import { FlatList, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Entypo from '@expo/vector-icons/Entypo';
 import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useNotes from "@/hooks/use-notes";
 
 export default function Index() {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const router = useRouter();
-
+  const { notes, createNote, loadNotes, deleteNote } = useNotes();
+  const Notes = useNotes();
   useEffect(() => {
     loadNotes();
-  }, []);
-
-  const loadNotes = async () => {
-    const saved = await AsyncStorage.getItem("notes");
-    if (saved) setNotes(JSON.parse(saved));
-  };
-
-  const createNote = async () => {
-    const id = Date.now().toString();
-    const newNote: Note = {
-      id,
-      text: "",
-      createdAt: Date.now(),
-    };
-
-    const updated = [newNote, ...notes];
-    setNotes(updated);
-    await AsyncStorage.setItem("notes", JSON.stringify(updated));
-
-    router.push(`/note/${id}`);
-  };
+  });
 
   return (
     <View style={styles.container}>
@@ -40,9 +20,14 @@ export default function Index() {
         keyExtractor={(item) => item.id}
         renderItem={(item) => (
           <Link href={`/note/${item.item.id}`} style={styles.noteItem}>
-            <Text numberOfLines={1} style={styles.noteText}>
-              {item.item.text || "Новая заметка"}
-            </Text>
+            <View style={styles.noteCnt}>
+              <Text numberOfLines={1} style={styles.noteText}>
+                {item.item.text || "Новая заметка"}
+              </Text>
+              <TouchableOpacity onPress={() => deleteNote(item.item.id)}>
+                <Entypo name="cross" size={24} color="black" style={styles.deleteBtnText}/>
+              </TouchableOpacity>
+            </View>
           </Link>
         )}
       />
@@ -62,7 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
   },
-  noteText: { fontSize: 16 },
+  noteText: { fontSize: 16, width: "90%" },
 
   addBtn: {
     position: "absolute",
@@ -77,4 +62,11 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   addBtnText: { color: "#fff", fontSize: 32, lineHeight: 32 },
+  deleteBtnText: { color: "#f00", fontSize: 32, lineHeight: 32 },
+  noteCnt: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  }
 });

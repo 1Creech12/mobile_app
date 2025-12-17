@@ -1,4 +1,4 @@
-import { Note } from "@/types/note";
+import { Note } from "@/note";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
