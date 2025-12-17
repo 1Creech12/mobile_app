@@ -1,9 +1,9 @@
 import { Note } from "@/note";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import useAsyncStorage from "./use-storage";
 import { STOREGE_KEY } from "../constants/app.constants";
-import { debounce } from "./use_debounce";
+import { debounce } from "./use-debounce";
 
 const SAVE_DELAY = 1000; // Задержка перед сохранением изменений (в миллисекундах)
 
@@ -51,13 +51,25 @@ export default function useNotes() {
     setNotes(updatedList);
   }
 
+  useEffect(() => {
+    return () => {
+      if (saveTimeout.current) {
+        clearTimeout(saveTimeout.current);
+      }
+
   const updateText = (text: string) => {
     if (!note) return;
 
     const updatedNote: Note = { ...note, text };
-    setNote(updatedNote);
-    
-    debounce(note, updatedNote);
+    setNote(updated);
+
+    if (saveTimeout.current) {
+      clearTimeout(saveTimeout.current);
+    }
+
+    saveTimeout.current = setTimeout(() => {
+      saveNote(updated)
+    }, SAVE_DELAY);
   };
 
   const deleteNote = async (id: string) => {

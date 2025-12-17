@@ -5,6 +5,7 @@ export default function useAsyncStorage<T>() {
 
   const setItems = async (key: string, data: T[]) => {
     // Записывает в хранилище данные по ключу
+    console.log('setItems')
     await AsyncStorage.setItem(key, JSON.stringify(data));
   }
 
