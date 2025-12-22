@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "../weather_app/components/WeeklyForecast.tsx", "../weather_app/components/CitySearch.tsx", "../weather_app/app/forecast.tsx"  ]
 }
