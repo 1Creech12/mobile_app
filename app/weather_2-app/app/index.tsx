@@ -1,17 +1,25 @@
-import { GesturehandlerRootViev } from 'react-native-gesture-handler';
-import { SafeAreaProvider, SafeAreaViev} from 'react-native-gesture-handler';
-import { ScrollView, Viev } from 'react-native'
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { ScrollView, View } from 'react-native'
 import InputSearch from '@/components/ui/Input/Input'
+import Button from '@/components/ui/Button/Button';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+const test = () => {
+    console.log('lol')
+}
+
 export default function Index() {
     return (
-        <GestureHandlerRootViev>
+        <GestureHandlerRootView>
             <SafeAreaProvider>
-                <SafeAreaViev>
+                <SafeAreaView>
 
                     <View>
                         <InputSearch
                             value={''}
-                            onChangeText={text}
+                            onChangeText={test}
                         />
 
                         <Button onPress={test}>
@@ -19,10 +27,10 @@ export default function Index() {
                         </Button>      
                     </View>
 
-                    <ScrollViev>
+                    <ScrollView>
                         <Hero />
-                    </ScrollViev>
-                </SafeAreaViev>
+                    </ScrollView>
+                </SafeAreaView>
             </SafeAreaProvider>
         </GestureHandlerRootViev>
     )
