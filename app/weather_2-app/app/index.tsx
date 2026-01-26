@@ -5,6 +5,7 @@ import InputSearch from '@/components/ui/Input/Input'
 import Button from '@/components/ui/Button/Button';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import Hero from '@/components/ui/Hero/Hero';
 
 const test = () => {
     console.log('lol')
