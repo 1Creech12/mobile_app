@@ -29,4 +29,4 @@ fun task4() {
     println("isSunny && isRainy = ${isSunny && isRainy}")
     println("isSunny || isRainy = ${isSunny || isRainy}")
     println("!isRainy = ${!isRainy}")
-}
+} 
